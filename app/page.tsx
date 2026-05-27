@@ -321,21 +321,17 @@ function NavBar() {
       >
         {/* Logo */}
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <div
+          <img
+            src="/assets/logo.png"
+            alt="Sun City Cleaners Logo"
             style={{
               width: 38,
               height: 38,
-              background: "#FFA800",
               borderRadius: 8,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 20,
               flexShrink: 0,
+              objectFit: "contain",
             }}
-          >
-            ☀
-          </div>
+          />
           <span
             style={{
               fontSize: 17,
