@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, ReactNode } from "react";
+import Image from "next/image";
 
 // ─────────────────────────────────────────────
 // TYPES
@@ -29,7 +30,7 @@ interface Service {
   body: string;
   features: string[];
   price: string;
-  emoji: string;
+  image: string;
   featured?: boolean;
   bg: string;
 }
@@ -98,7 +99,7 @@ const STEPS: Step[] = [
 const SERVICES: Service[] = [
   {
     badge: "Most Popular",
-    title: "Residential Cleaning",
+    title: "Routine Cleaning",
     body: "A thorough top-to-bottom clean of your home — kitchens, bathrooms, bedrooms, and living areas.",
     features: [
       "Dusting, vacuuming & mopping",
@@ -106,12 +107,12 @@ const SERVICES: Service[] = [
       "Available weekly or bi-weekly",
     ],
     price: "$200",
-    emoji: "🏠",
+    image: "/assets/rountine.png",
     bg: "linear-gradient(135deg,#e8f6fb,#b8e4f5)",
   },
   {
     badge: "Business",
-    title: "Commercial Cleaning",
+    title: "Office Cleaning",
     body: "Keep your workspace professional and sanitized. Flexible scheduling around your business hours.",
     features: [
       "Office desks, floors & restrooms",
@@ -119,7 +120,7 @@ const SERVICES: Service[] = [
       "Monthly contracts available",
     ],
     price: "$300",
-    emoji: "🏢",
+    image: "/assets/office.png",
     featured: true,
     bg: "linear-gradient(135deg,#1a3a5c,#0d2640)",
   },
@@ -133,8 +134,47 @@ const SERVICES: Service[] = [
       "Deposit-return guaranteed",
     ],
     price: "$400",
-    emoji: "📦",
+    image: "/assets/move in _ out.png",
     bg: "linear-gradient(135deg,#e8faf0,#a0dbb8)",
+  },
+  {
+    badge: "Specialized",
+    title: "Local Churches",
+    body: "Respectful, thorough cleaning for places of worship. We understand the unique needs of religious spaces.",
+    features: [
+      "Sanctuaries & fellowship halls",
+      "Pew & altar cleaning",
+      "Flexible scheduling around services",
+    ],
+    price: "$350",
+    image: "/assets/church.png",
+    bg: "linear-gradient(135deg,#f5e6d3,#e8c9a8)",
+  },
+  {
+    badge: "Flexible",
+    title: "Basic One-Time",
+    body: "Perfect for spring cleaning or special occasions. A deep clean when you need it most.",
+    features: [
+      "Deep cleaning of all rooms",
+      "Baseboards & window sills",
+      "Appliance interiors",
+    ],
+    price: "$250",
+    image: "/assets/One time clean .png",
+    bg: "linear-gradient(135deg,#e8f0fa,#c8d8f0)",
+  },
+  {
+    badge: "Professional",
+    title: "Realtor Services",
+    body: "Help your listings shine. Professional cleaning for showings, open houses, and staging.",
+    features: [
+      "Show-ready presentation",
+      "Quick turnaround available",
+      "Bulk pricing for multiple properties",
+    ],
+    price: "$280",
+    image: "/assets/realtor.png",
+    bg: "linear-gradient(135deg,#f0e8f5,#e0d0f0)",
   },
 ];
 
@@ -199,16 +239,17 @@ const FOOTER_COLUMNS: FooterColumn[] = [
   {
     heading: "Services",
     links: [
-      "Residential Cleaning",
-      "Commercial Cleaning",
+      "Routine Cleaning",
+      "Office Cleaning",
       "Move In / Move Out",
-      "Deep Cleaning",
-      "Post-Construction",
+      "Local Churches",
+      "Basic One-Time",
+      "Realtor Services",
     ],
   },
   {
-    heading: "Company",
-    links: ["About Us", "Our Team", "Careers", "Blog", "Contact"],
+    heading: "About",
+    links: ["About Us"],
   },
   {
     heading: "Contact",
@@ -676,11 +717,17 @@ function Hero() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: 80,
               position: "relative",
             }}
           >
-            🧹
+            <Image
+              src="/assets/home page.png"
+              alt="Home cleaning"
+              fill
+              style={{
+                objectFit: "cover",
+              }}
+            />
             <div
               style={{
                 position: "absolute",
@@ -924,6 +971,9 @@ function HowItWorks() {
 // ─────────────────────────────────────────────
 
 function Services() {
+  const [showAll, setShowAll] = useState(false);
+  const displayedServices = showAll ? SERVICES : SERVICES.slice(0, 3);
+
   return (
     <section id="services" style={{ padding: "96px 5%", background: "#fff" }}>
       <div style={{ textAlign: "center", marginBottom: 60 }}>
@@ -945,7 +995,7 @@ function Services() {
       </div>
 
       <div className="three-col-grid">
-        {SERVICES.map((s, i) => (
+        {displayedServices.map((s, i) => (
           <Reveal key={s.title} delay={i * 100}>
             <div
               className="service-card"
@@ -981,11 +1031,18 @@ function Services() {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  fontSize: 56,
                   overflow: "hidden",
+                  position: "relative",
                 }}
               >
-                {s.emoji}
+                <Image
+                  src={s.image}
+                  alt={s.title}
+                  fill
+                  style={{
+                    objectFit: "cover",
+                  }}
+                />
               </div>
 
               {/* Info */}
@@ -1098,6 +1155,37 @@ function Services() {
           </Reveal>
         ))}
       </div>
+
+      {/* Show More/Less Button */}
+      {SERVICES.length > 3 && (
+        <div style={{ textAlign: "center", marginTop: 48 }}>
+          <button
+            onClick={() => setShowAll(!showAll)}
+            style={{
+              background: "none",
+              border: "2px solid #0B2545",
+              color: "#0B2545",
+              fontSize: 14,
+              fontWeight: 600,
+              padding: "12px 32px",
+              borderRadius: 8,
+              cursor: "pointer",
+              fontFamily: "Outfit,sans-serif",
+              transition: "all 0.2s",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "#0B2545";
+              e.currentTarget.style.color = "#fff";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "none";
+              e.currentTarget.style.color = "#0B2545";
+            }}
+          >
+            {showAll ? "Show Less" : "Show More"}
+          </button>
+        </div>
+      )}
     </section>
   );
 }
@@ -1224,10 +1312,17 @@ function WhyUs() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: 80,
+              position: "relative",
             }}
           >
-            🌟
+            <Image
+              src="/assets/cleaning supplies.png"
+              alt="Cleaning supplies"
+              fill
+              style={{
+                objectFit: "cover",
+              }}
+            />
           </div>
           <div
             style={{
@@ -1445,17 +1540,25 @@ function Footer() {
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
             <div
               style={{
-                width: 36,
-                height: 36,
-                background: "#FFA800",
+                width: 50,
+                height: 50,
                 borderRadius: 8,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                fontSize: 18,
+                position: "relative",
+                overflow: "hidden",
               }}
             >
-              ☀
+              <Image
+                src="/assets/logo.png"
+                alt="Sun City Cleaners Logo"
+                fill
+                style={{
+                  objectFit: "contain",
+                  padding: 4,
+                }}
+              />
             </div>
             <span
               style={{ fontSize: 16, fontWeight: 700, color: "#fff", fontFamily: "Outfit,sans-serif" }}
