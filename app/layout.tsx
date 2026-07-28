@@ -8,8 +8,8 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Cleaning Service",
-  description: "Professional cleaning services",
+  title: "Residential & Commercial Cleaning in El Paso, TX",
+  description: "Professional residential and commercial cleaning services in El Paso, TX. Meticulous, reliable, and eco-friendly cleaning tailored to your schedule. Book your clean today!",
 };
 
 export default function RootLayout({

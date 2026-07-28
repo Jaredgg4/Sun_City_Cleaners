@@ -69,9 +69,8 @@ const NAV_LINKS: NavLink[] = [
 ];
 
 const STATS: Stat[] = [
-  { value: "500+", label: "Homes Cleaned" },
   { value: "5.0★", label: "Average Rating" },
-  { value: "3 yrs", label: "In Business" },
+  { value: "2 yrs", label: "In Business" },
   { value: "100%", label: "Satisfaction Guarantee" },
 ];
 
@@ -117,7 +116,7 @@ const SERVICES: Service[] = [
     features: [
       "Office desks, floors & restrooms",
       "Before/after-hours availability",
-      "Monthly contracts available",
+      "Weekly, bi-weekly, or custom schedules.",
     ],
     price: "$300",
     image: "/assets/office.png",
@@ -131,7 +130,7 @@ const SERVICES: Service[] = [
     features: [
       "Inside cabinets & appliances",
       "Windows, walls & baseboards",
-      "Deposit-return guaranteed",
+      "Designed to maximize your deposit return.",
     ],
     price: "$400",
     image: "/assets/move in _ out.png",
@@ -152,7 +151,7 @@ const SERVICES: Service[] = [
   },
   {
     badge: "Flexible",
-    title: "Basic One-Time",
+    title: "One-Time Deep Cleaning",
     body: "Perfect for spring cleaning or special occasions. A deep clean when you need it most.",
     features: [
       "Deep cleaning of all rooms",
@@ -170,7 +169,8 @@ const SERVICES: Service[] = [
     features: [
       "Show-ready presentation",
       "Quick turnaround available",
-      "Bulk pricing for multiple properties",
+      "Preferred pricing for recurring listings.",
+      "Priority scheduling for Realtors.",
     ],
     price: "$280",
     image: "/assets/realtor.png",
@@ -243,20 +243,16 @@ const FOOTER_COLUMNS: FooterColumn[] = [
       "Office Cleaning",
       "Move In / Move Out",
       "Local Churches",
-      "Basic One-Time",
+      "One-Time Deep Cleaning",
       "Realtor Services",
     ],
-  },
-  {
-    heading: "About",
-    links: ["About Us"],
   },
   {
     heading: "Contact",
     links: [
       "📍 El Paso, TX",
       "📞 (915) 555-0182",
-      "✉ hello@suncitycleaners.com",
+      "✉ suncitycleanersep@gmail.com",
       "Hours: Mon–Sat 8am–6pm",
     ],
   },
@@ -676,18 +672,6 @@ function Hero() {
             style={{ display: "flex", gap: 20, marginTop: 36, flexWrap: "wrap" }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <span style={{ color: "#FFA800", fontSize: 18 }}>🏆</span>
-              <span
-                style={{
-                  fontSize: 13,
-                  color: "rgba(255,255,255,0.6)",
-                  fontWeight: 300,
-                }}
-              >
-                500+ Happy customers
-              </span>
-            </div>
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
               <span style={{ color: "#FFA800" }}>★★★★★</span>
               <span
                 style={{
@@ -738,52 +722,6 @@ function Hero() {
             />
           </div>
 
-          {/* Badge 1 */}
-          <div
-            style={{
-              position: "absolute",
-              bottom: 28,
-              left: -28,
-              background: "#fff",
-              borderRadius: 14,
-              padding: "16px 20px",
-              boxShadow: "0 12px 40px rgba(11,37,69,0.2)",
-              display: "flex",
-              alignItems: "center",
-              gap: 12,
-              animation: "float 3s ease-in-out infinite",
-            }}
-          >
-            <div
-              style={{
-                width: 42,
-                height: 42,
-                background: "rgba(255,168,0,0.12)",
-                borderRadius: 10,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: 22,
-              }}
-            >
-              🏆
-            </div>
-            <div>
-              <strong
-                style={{
-                  display: "block",
-                  fontSize: 20,
-                  fontWeight: 800,
-                  color: "#0B2545",
-                }}
-              >
-                500+
-              </strong>
-              <span style={{ fontSize: 12, color: "#5A6A7A" }}>
-                Happy customers
-              </span>
-            </div>
-          </div>
 
           {/* Badge 2 */}
           <div
@@ -974,6 +912,10 @@ function Services() {
   const [showAll, setShowAll] = useState(false);
   const displayedServices = showAll ? SERVICES : SERVICES.slice(0, 3);
 
+  const scrollTo = (href: string) => {
+    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <section id="services" style={{ padding: "96px 5%", background: "#fff" }}>
       <div style={{ textAlign: "center", marginBottom: 60 }}>
@@ -1000,28 +942,9 @@ function Services() {
             <div
               className="service-card"
               style={{
-                background: s.featured ? "#0B2545" : "#F7F5F0",
+                background: i % 2 === 0 ? "#fff" : "#0B2545",
               }}
             >
-              {s.featured && (
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 20,
-                    right: 20,
-                    background: "#FFA800",
-                    color: "#0B2545",
-                    fontSize: 10,
-                    fontWeight: 700,
-                    padding: "4px 12px",
-                    borderRadius: 100,
-                    letterSpacing: "0.06em",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  ⭐ Featured
-                </div>
-              )}
 
               {/* Image */}
               <div
@@ -1072,7 +995,7 @@ function Services() {
                     fontWeight: 700,
                     marginBottom: 10,
                     letterSpacing: "-0.01em",
-                    color: s.featured ? "#fff" : "#0B2545",
+                    color: i % 2 === 0 ? "#0B2545" : "#fff",
                   }}
                 >
                   {s.title}
@@ -1080,7 +1003,7 @@ function Services() {
                 <p
                   style={{
                     fontSize: 14,
-                    color: s.featured ? "rgba(255,255,255,0.55)" : "#5A6A7A",
+                    color: i % 2 === 0 ? "#5A6A7A" : "rgba(255,255,255,0.55)",
                     lineHeight: 1.6,
                     fontWeight: 300,
                     marginBottom: 20,
@@ -1091,7 +1014,7 @@ function Services() {
                 <div
                   style={{
                     borderTop: `1px solid ${
-                      s.featured ? "rgba(255,255,255,0.08)" : "rgba(11,37,69,0.08)"
+                      i % 2 === 0 ? "rgba(11,37,69,0.08)" : "rgba(255,255,255,0.08)"
                     }`,
                     paddingTop: 16,
                     marginBottom: 20,
@@ -1102,9 +1025,9 @@ function Services() {
                       key={f}
                       style={{
                         fontSize: 13,
-                        color: s.featured
-                          ? "rgba(255,255,255,0.55)"
-                          : "#5A6A7A",
+                        color: i % 2 === 0
+                          ? "#5A6A7A"
+                          : "rgba(255,255,255,0.55)",
                         display: "flex",
                         alignItems: "center",
                         gap: 8,
@@ -1129,7 +1052,7 @@ function Services() {
                   style={{
                     fontSize: 13,
                     fontWeight: 600,
-                    color: s.featured ? "#fff" : "#0B2545",
+                    color: i % 2 === 0 ? "#0B2545" : "#fff",
                     marginTop: "auto",
                   }}
                 >
@@ -1145,8 +1068,9 @@ function Services() {
                   </strong>
                 </div>
                 <button
-                  className={s.featured ? "btn-service-gold" : "btn-service-outline"}
+                  className={i % 2 === 0 ? "btn-service-outline" : "btn-service-gold"}
                   style={{ marginTop: 16 }}
+                  onClick={() => scrollTo("#contact")}
                 >
                   Book Now →
                 </button>
@@ -1233,7 +1157,7 @@ function WhyUs() {
             className="section-title"
             style={{ color: "#fff", marginTop: 8 }}
           >
-            We dont just clean.
+            We don't just clean.
             <br />
             <em style={{ color: "#FFA800", fontStyle: "normal" }}>We care.</em>
           </h2>
@@ -1244,7 +1168,7 @@ function WhyUs() {
             style={{ color: "rgba(255,255,255,0.5)", margin: "16px 0 40px" }}
           >
             Founded in El Paso by locals, for locals. We treat every home like
-            its our own.
+            it's our own.
           </p>
         </Reveal>
 
@@ -1359,7 +1283,7 @@ function WhyUs() {
                 Eco-Certified
               </strong>
               <span style={{ fontSize: 12, color: "#5A6A7A" }}>
-                Green clean guaranteed
+                Eco-friendly clean, guaranteed.
               </span>
             </div>
           </div>
@@ -1502,6 +1426,7 @@ function CTABanner() {
         className="cta-actions"
       >
         <button
+          onClick={() => window.location.href = 'mailto:suncitycleanersep@gmail.com?subject=Free Quote Request'}
           style={{
             background: "#0B2545",
             color: "#fff",
@@ -1520,7 +1445,12 @@ function CTABanner() {
         </button>
         <p style={{ fontSize: 13, color: "rgba(11,37,69,0.6)" }}>
           Or call us:{" "}
-          <strong style={{ color: "#0B2545" }}>(915) 555-0182</strong>
+          <a
+            href="tel:9155550182"
+            style={{ color: "#0B2545", fontWeight: "bold", textDecoration: "none" }}
+          >
+            (915) 555-0182
+          </a>
         </p>
       </div>
     </section>
@@ -1575,30 +1505,142 @@ function Footer() {
               maxWidth: 260,
             }}
           >
-            El Pasos trusted cleaning experts. Professional, reliable,
+            El Paso's trusted cleaning experts. Professional, reliable,
             eco-friendly — since 2022.
           </p>
           <div style={{ display: "flex", gap: 10, marginTop: 24 }}>
-            {["f", "in", "ig", "g"].map((s) => (
-              <div
-                key={s}
-                style={{
-                  width: 36,
-                  height: 36,
-                  borderRadius: 8,
-                  background: "rgba(255,255,255,0.06)",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "rgba(255,255,255,0.5)",
-                  fontSize: 13,
-                  cursor: "pointer",
-                }}
-              >
-                {s}
-              </div>
-            ))}
+            <a
+              href="https://facebook.com/suncitycleaners"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                width: 36,
+                height: 36,
+                borderRadius: 8,
+                background: "rgba(255,255,255,0.06)",
+                border: "1px solid rgba(255,255,255,0.08)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                transition: "background 0.2s, border-color 0.2s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "rgba(255,255,255,0.12)";
+                e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "rgba(255,255,255,0.06)";
+                e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
+              }}
+            >
+              <Image
+                src="/assets/logos/Facebook-Logo.png"
+                alt="Facebook"
+                width={30}
+                height={30}
+                style={{ objectFit: "contain" }}
+              />
+            </a>
+            <a
+              href="https://instagram.com/suncitycleaners"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                width: 36,
+                height: 36,
+                borderRadius: 8,
+                background: "rgba(255,255,255,0.06)",
+                border: "1px solid rgba(255,255,255,0.08)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                transition: "background 0.2s, border-color 0.2s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "rgba(255,255,255,0.12)";
+                e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "rgba(255,255,255,0.06)";
+                e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
+              }}
+            >
+              <Image
+                src="/assets/logos/Instagram_logo.svg"
+                alt="Instagram"
+                width={20}
+                height={20}
+                style={{ objectFit: "contain" }}
+              />
+            </a>
+            <a
+              href="https://twitter.com/SunCityCleaners"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                width: 36,
+                height: 36,
+                borderRadius: 8,
+                background: "rgba(255,255,255,0.06)",
+                border: "1px solid rgba(255,255,255,0.08)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                transition: "background 0.2s, border-color 0.2s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "rgba(255,255,255,0.12)";
+                e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "rgba(255,255,255,0.06)";
+                e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
+              }}
+            >
+              <Image
+                src="/assets/logos/X-Logo.png"
+                alt="X"
+                width={24}
+                height={24}
+                style={{ objectFit: "contain" }}
+              />
+            </a>
+            <a
+              href="https://tiktok.com/@SunCityCleaners"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                width: 36,
+                height: 36,
+                borderRadius: 8,
+                background: "rgba(255,255,255,0.06)",
+                border: "1px solid rgba(255,255,255,0.08)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                transition: "background 0.2s, border-color 0.2s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "rgba(255,255,255,0.12)";
+                e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "rgba(255,255,255,0.06)";
+                e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
+              }}
+            >
+              <Image
+                src="/assets/logos/tiktok-logo.png"
+                alt="TikTok"
+                width={20}
+                height={20}
+                style={{ objectFit: "contain" }}
+              />
+            </a>
           </div>
         </div>
 
@@ -1655,21 +1697,23 @@ function Footer() {
         <p style={{ fontSize: 13, color: "rgba(255,255,255,0.3)", fontWeight: 300 }}>
           © 2026 Sun City Cleaners. All rights reserved.
         </p>
-        <div style={{ display: "flex", gap: 24 }}>
-          {["Privacy Policy", "Terms of Service", "Sitemap"].map((l) => (
-            <a
-              key={l}
-              href="#"
-              style={{
-                fontSize: 13,
-                color: "rgba(255,255,255,0.3)",
-                textDecoration: "none",
-                fontFamily: "Outfit,sans-serif",
-              }}
-            >
-              {l}
-            </a>
-          ))}
+        <div style={{ display: "flex", gap: 24, alignItems: "center" }}>
+          <div style={{ display: "flex", gap: 24 }}>
+            {["Privacy Policy", "Terms of Service", "Sitemap"].map((l) => (
+              <a
+                key={l}
+                href="#"
+                style={{
+                  fontSize: 13,
+                  color: "rgba(255,255,255,0.3)",
+                  textDecoration: "none",
+                  fontFamily: "Outfit,sans-serif",
+                }}
+              >
+                {l}
+              </a>
+            ))}
+          </div>
         </div>
       </div>
     </footer>
@@ -1846,8 +1890,8 @@ export default function SunCityCleaners() {
       <main>
         <Hero />
         <StatsStrip />
-        <HowItWorks />
         <Services />
+        <HowItWorks />
         <WhyUs />
         <Testimonials />
         <CTABanner />
